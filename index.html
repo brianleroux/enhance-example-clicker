@@ -1,0 +1,26 @@
+<el-clicker></el-clicker>
+<script>
+class Counter extends HTMLElement {
+
+  constructor () {
+    super()
+    // the server rendered and expanded template is shared w the client
+    const template = document.getElementById('el-clicker-template')
+    this.replaceChildren(template.content.cloneNode(true))
+    // let client js take over from here on.. 
+    this.count = 0
+    this.btn = this.querySelector('button')
+    this.btn.addEventListener('click', this.addOne.bind(this))
+  }
+
+  async addOne (e) {
+    e.preventDefault()
+    this.count += 1
+    this.btn.innerText = 'Clicked ' + this.count
+  }
+}
+
+window.addEventListener('DOMContentLoaded', e=> {
+  customElements.define('el-clicker', Counter)
+})
+</script>
